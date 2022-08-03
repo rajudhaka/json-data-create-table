@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="facebook-domain-verification"
+      content="hdkyr3dw7gea3idaly8pbp1npviju5"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="myDynamicTable"></div>
+    <!-- <div id="jsondata"></div>
+    <p id="demo"></p> -->
+
+    <script>
+      let cities = [];
+      fetch(
+        "https://recruiting.paylocity.com/recruiting/v2/api/feed/jobs/cd357c9c-d6b0-47ba-ad96-4f00b82a3266"
+      )
+        .then((response) => response.json())
+        .then(function (data) {
+          // console.log(data.jobs);
+          var jobsinfo = data.jobs;
+
+          // let text = "";
+          // let applyurl = "";
+
+          // for (let k = 0; k < jobsinfo.length; k++) {
+          //   text = jobsinfo[k].title;
+          //   // console.log(text);
+          //   // applyurl += jobsinfo[i].applyUrl + "<br>";
+          //   // console.log(jobsinfo);
+
+          //   // document.getElementById("jsondata").innerHTML = text;
+          //   // document.getElementById("demo").innerHTML = applyurl;
+          // }
+
+          function addTable() {
+            var myTableDiv = document.getElementById("myDynamicTable");
+
+            let heading_1 = document.createElement("th");
+            heading_1.innerHTML = "Job Name";
+            let heading_2 = document.createElement("th");
+            heading_2.innerHTML = "Company Name";
+            let heading_3 = document.createElement("th");
+            heading_3.innerHTML = "Apply Now";
+            var table = document.createElement("TABLE");
+            table.border = "1";
+            let thead = document.createElement("thead");
+            var tableBody = document.createElement("TBODY");
+            table.appendChild(tableBody);
+            table.appendChild(thead);
+            let row_1 = document.createElement("tr");
+            row_1.appendChild(heading_1);
+            row_1.appendChild(heading_2);
+            row_1.appendChild(heading_3);
+            thead.appendChild(row_1);
+
+            for (var i = 0; i < jobsinfo.length; i++) {
+              // Creating and adding data to first row of the table
+
+              var tr = document.createElement("TR");
+              tableBody.appendChild(tr);
+              // tr.appendChild(document.createTextNode(text));
+
+              // for (var j = 0; j < jobsinfo.length; j++) {
+              var td = document.createElement("TD");
+              var td2 = document.createElement("TD");
+              var td3 = document.createElement("TD");
+              var td4 = document.createElement("TD");
+              var td5 = document.createElement("TD");
+
+              // td.width = "75";
+              tr.appendChild(td);
+              tr.appendChild(td2);
+              tr.appendChild(td3);
+              tr.appendChild(td4);
+              tr.appendChild(td5);
+              // tr.appendChild(document.createTextNode(jobsinfo[i].title));
+
+              td.appendChild(document.createTextNode(jobsinfo[i].title));
+              td2.appendChild(document.createTextNode(jobsinfo[i].companyName));
+
+              // Job url
+
+              var a = document.createElement("a");
+              var linkText = document.createTextNode("Apply Now");
+              a.appendChild(linkText);
+              a.title = "my title text";
+              a.target = "_blank";
+              let joblink = jobsinfo[i].applyUrl;
+              a.href = joblink;
+              td3.appendChild(a);
+              td4.appendChild(document.createTextNode(jobsinfo[i].jobTypes));
+
+              // html tag support
+              let html = jobsinfo[i].requirements;
+              td5.appendChild(document.createTextNode(html));
+
+              // td3.appendChild(document.createTextNode(joblink));
+              // td3.appendChild(document.createTextNode(joblink));
+
+              console.log(jobsinfo);
+              // }
+            }
+            myTableDiv.appendChild(table);
+          }
+          addTable();
+        });
+    </script>
+  </body>
+</html>
